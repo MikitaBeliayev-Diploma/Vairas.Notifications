@@ -1,0 +1,15 @@
+{
+  "UserConfig": {
+    "Logging": {"Type":"Console"},
+    "Namespaces": [{"Name":"sbemulatorns","Topics":[
+      {"Name":"vairas.scheduling.events.v1","Properties":{"RequiresDuplicateDetection":false,"DefaultMessageTimeToLive":"PT1H"},"Subscriptions":[
+        {"Name":"notifications","Properties":{"LockDuration":"PT1M","MaxDeliveryCount":5,"DefaultMessageTimeToLive":"PT1H"}},
+        {"Name":"notifications-six","Properties":{"LockDuration":"PT1M","MaxDeliveryCount":5,"DefaultMessageTimeToLive":"PT1H"}}
+      ]},
+      {"Name":"vairas.learning.events.v1","Properties":{"RequiresDuplicateDetection":false,"DefaultMessageTimeToLive":"PT1H"},"Subscriptions":[
+        {"Name":"notifications","Properties":{"LockDuration":"PT1M","MaxDeliveryCount":5,"DefaultMessageTimeToLive":"PT1H"}},
+        {"Name":"notifications-six","Properties":{"LockDuration":"PT1M","MaxDeliveryCount":5,"DefaultMessageTimeToLive":"PT1H"}}
+      ]}
+    ]}]
+  }
+}

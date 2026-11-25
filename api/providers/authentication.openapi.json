@@ -1,0 +1,1979 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Vairas Authentication API",
+    "description": "Global identity, verified local credentials, browser-bound external OIDC login/link, sessions and scoped workload tokens. No profiles or school roles are created. Registration/challenge acknowledgments do not disclose account existence. User access tokens last at most 15 minutes; refresh tokens rotate once. Email links are delivered asynchronously through SMTP.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:7100/"
+    }
+  ],
+  "paths": {
+    "/api/v1/auth/registrations": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register credentials and queue email verification without disclosing account existence.",
+        "operationId": "registerIdentity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcceptedResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcceptedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [ ]
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Authenticate a verified local password and create a session.",
+        "operationId": "loginIdentity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPair"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPair"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [ ]
+      }
+    },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Rotate a refresh credential once; detected reuse revokes the session.",
+        "operationId": "rotateRefreshToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPair"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPair"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [ ]
+      }
+    },
+    "/api/v1/auth/challenges": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Queue a purpose-bound email challenge, returning a generic acknowledgment.",
+        "operationId": "requestAccountChallenge",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcceptedResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcceptedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [ ]
+      }
+    },
+    "/api/v1/auth/challenges/completion": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Consume a one-time challenge; password resets revoke all sessions.",
+        "operationId": "completeAccountChallenge",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeCompletionRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeCompletionRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeCompletionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcceptedResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcceptedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [ ]
+      }
+    },
+    "/api/v1/auth/oidc/requests": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Begin a configured external OIDC login or an authenticated explicit link.",
+        "description": "Requires a Secure HttpOnly browser correlation cookie. The frontend forwards code/state by JSON POST after the allowlisted provider redirect. Link additionally requires a currently active user bearer session. Transactions are single-use and expire after ten minutes; matching email never authorizes linking.",
+        "operationId": "beginOidc",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OidcStartRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OidcStartRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OidcStartRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OidcRedirect"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OidcRedirect"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [ ]
+      }
+    },
+    "/api/v1/auth/oidc/callback": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Complete the single-use browser-bound OIDC exchange.",
+        "description": "Requires a Secure HttpOnly browser correlation cookie. The frontend forwards code/state by JSON POST after the allowlisted provider redirect. Link additionally requires a currently active user bearer session. Transactions are single-use and expire after ten minutes; matching email never authorizes linking.",
+        "operationId": "completeOidc",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OidcCallbackRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OidcCallbackRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OidcCallbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPair"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPair"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [ ]
+      }
+    },
+    "/api/v1/auth/sessions/{sessionId}/revocation": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Revoke an owned session using a stable idempotency key.",
+        "description": "Only the identity's own sessions. Successful and authenticated not-found outcomes retain the key binding; changed target/identity conflicts. A completed self-logout can replay its saved receipt with the original still-unexpired JWT; this exception authorizes no other action.",
+        "operationId": "revokeOwnSession",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionRevocation"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionRevocation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [ ]
+          }
+        ]
+      }
+    },
+    "/connect/token": {
+      "post": {
+        "tags": [
+          "Identity"
+        ],
+        "summary": "Obtain a scoped workload token for an allowlisted service client.",
+        "description": "Internal client_credentials or explicitly enabled RFC 8693 ReadPreviewV1 exchange. Exchange requires subject_token/access-token type, one configured resource, school_id and a subset of read/preview scopes. Only chat-backend -> MCP -> owner is permitted; ConfirmedLessonActionsV1 additionally requires its separate enable switch and exact lesson_action binding; its second hop targets Scheduling only. No refresh token grant. Exchange success additionally returns issued_token_type. Never publish this endpoint through Gateway.",
+        "operationId": "acquireUserManagementWorkloadToken",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subject_token": {
+                    "type": "string"
+                  },
+                  "subject_token_type": {
+                    "type": "string"
+                  },
+                  "requested_token_type": {
+                    "type": "string"
+                  },
+                  "resource": {
+                    "type": "string"
+                  },
+                  "lesson_action": {
+                    "type": "string"
+                  },
+                  "school_id": {
+                    "type": "string"
+                  },
+                  "grant_type": {
+                    "type": "string"
+                  },
+                  "client_id": {
+                    "type": "string"
+                  },
+                  "client_secret": {
+                    "type": "string"
+                  },
+                  "scope": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkloadTokenResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkloadTokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [ ]
+      }
+    },
+    "/internal/v1/sessions/validate": {
+      "post": {
+        "tags": [
+          "Identity"
+        ],
+        "summary": "Validate current Authentication admission for an exact identity/session pair.",
+        "operationId": "validateUserManagementSession",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionValidationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionValidationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionValidationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionValidationResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionValidationResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workloadOAuth": [
+              "identity.validate"
+            ]
+          }
+        ]
+      }
+    },
+    "/.well-known/openid-configuration": {
+      "get": {
+        "tags": [
+          "Identity"
+        ],
+        "summary": "Return the issuer metadata required by JWT resource servers.",
+        "operationId": "getIssuerDiscovery",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [ ]
+      }
+    },
+    "/.well-known/jwks.json": {
+      "get": {
+        "tags": [
+          "Identity"
+        ],
+        "summary": "Return current and previous public RSA signing keys.",
+        "operationId": "getSigningKeys",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [ ]
+      }
+    },
+    "/internal/v1/identities/{identityId}/verified-email": {
+      "get": {
+        "tags": [
+          "VerifiedEmail"
+        ],
+        "summary": "Read a short-lived verified-login-email decision for an authorized Notifications workload.",
+        "operationId": "getVerifiedNotificationEmail",
+        "parameters": [
+          {
+            "name": "identityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifiedEmailResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifiedEmailResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Non-disclosing error; preserve code and correlationId.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthProblem"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "workloadOAuth": [
+              "identity.contact.read"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AcceptedResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "Request accepted."
+          }
+        }
+      },
+      "AuthProblem": {
+        "required": [
+          "title",
+          "status",
+          "code",
+          "correlationId"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "code": {
+            "type": "string"
+          },
+          "correlationId": {
+            "type": "string"
+          }
+        }
+      },
+      "ChallengeCompletionRequest": {
+        "required": [
+          "challengeToken",
+          "newPassword"
+        ],
+        "type": "object",
+        "properties": {
+          "challengeToken": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "newPassword": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "writeOnly": true
+          }
+        }
+      },
+      "ChallengeRequest": {
+        "required": [
+          "email",
+          "purpose"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        }
+      },
+      "CredentialsRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "writeOnly": true
+          }
+        }
+      },
+      "OidcCallbackRequest": {
+        "required": [
+          "code",
+          "state"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "writeOnly": true
+          },
+          "state": {
+            "type": "string",
+            "writeOnly": true
+          }
+        }
+      },
+      "OidcRedirect": {
+        "required": [
+          "authorizationUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "authorizationUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "OidcStartRequest": {
+        "required": [
+          "issuer",
+          "redirectUri",
+          "purpose"
+        ],
+        "type": "object",
+        "properties": {
+          "issuer": {
+            "type": "string"
+          },
+          "redirectUri": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "RefreshRequest": {
+        "required": [
+          "refreshToken"
+        ],
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "writeOnly": true
+          }
+        }
+      },
+      "SessionRevocation": {
+        "required": [
+          "sessionId"
+        ],
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "SessionValidationRequest": {
+        "required": [
+          "identityId",
+          "sessionId"
+        ],
+        "type": "object",
+        "properties": {
+          "identityId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sessionId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "SessionValidationResult": {
+        "required": [
+          "active",
+          "identityId",
+          "sessionId",
+          "validUntil"
+        ],
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "identityId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sessionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TokenPair": {
+        "required": [
+          "accessToken",
+          "refreshToken",
+          "tokenType",
+          "expiresIn",
+          "identityId",
+          "sessionId"
+        ],
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "tokenType": {
+            "type": "string"
+          },
+          "expiresIn": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "identityId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sessionId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "VerifiedEmailResponse": {
+        "required": [
+          "identityId",
+          "eligible",
+          "email",
+          "revision",
+          "validUntil"
+        ],
+        "type": "object",
+        "properties": {
+          "identityId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "eligible": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "revision": {
+            "type": "string"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "WorkloadTokenResponse": {
+        "required": [
+          "access_token",
+          "token_type",
+          "expires_in",
+          "scope"
+        ],
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string"
+          },
+          "token_type": {
+            "type": "string"
+          },
+          "expires_in": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "issued_token_type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "description": "OAuth2 client-credentials result, using the standard field names."
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "workloadOAuth": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://localhost:7100/connect/token",
+            "scopes": {
+              "identity.validate": "Validate current identity and exact session ownership",
+              "identity.contact.read": "Read verified login email for Notifications"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Authentication"
+    },
+    {
+      "name": "Identity"
+    },
+    {
+      "name": "VerifiedEmail"
+    }
+  ]
+}

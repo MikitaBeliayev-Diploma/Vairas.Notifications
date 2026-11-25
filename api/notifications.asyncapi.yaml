@@ -1,0 +1,693 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "Vairas Notifications implemented consumer",
+    "version": "0.2.0",
+    "description": "Actual Azure Service Bus application metadata and payloads. ACK follows committed Inbox/fan-out. Current owner facts override payload assertions; stale sources are ignored. LessonReminder is local; MaintenanceScheduled is disabled. No outgoing notification events are published."
+  },
+  "defaultContentType": "application/json",
+  "channels": {
+    "schedulingEvents": {
+      "address": "vairas.scheduling.events.v1",
+      "description": "Dedicated notifications subscription; expected producer is bound to this topic.",
+      "messages": {
+        "LessonScheduled": {
+          "$ref": "#/components/messages/LessonScheduled"
+        },
+        "LessonRescheduled": {
+          "$ref": "#/components/messages/LessonRescheduled"
+        },
+        "LessonCancelled": {
+          "$ref": "#/components/messages/LessonCancelled"
+        },
+        "LessonCompleted": {
+          "$ref": "#/components/messages/LessonCompleted"
+        },
+        "LessonNoShow": {
+          "$ref": "#/components/messages/LessonNoShow"
+        },
+        "LessonParticipantsChanged": {
+          "$ref": "#/components/messages/LessonParticipantsChanged"
+        }
+      }
+    },
+    "learningEvents": {
+      "address": "vairas.learning.events.v1",
+      "description": "Dedicated notifications subscription; expected producer is bound to this topic.",
+      "messages": {
+        "AssessmentPassed": {
+          "$ref": "#/components/messages/AssessmentPassed"
+        },
+        "AssessmentFailed": {
+          "$ref": "#/components/messages/AssessmentFailed"
+        },
+        "AssessmentResultRevised": {
+          "$ref": "#/components/messages/AssessmentResultRevised"
+        }
+      }
+    }
+  },
+  "operations": {
+    "consumeScheduling": {
+      "action": "receive",
+      "channel": {
+        "$ref": "#/channels/schedulingEvents"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/schedulingEvents/messages/LessonScheduled"
+        },
+        {
+          "$ref": "#/channels/schedulingEvents/messages/LessonRescheduled"
+        },
+        {
+          "$ref": "#/channels/schedulingEvents/messages/LessonCancelled"
+        },
+        {
+          "$ref": "#/channels/schedulingEvents/messages/LessonCompleted"
+        },
+        {
+          "$ref": "#/channels/schedulingEvents/messages/LessonNoShow"
+        },
+        {
+          "$ref": "#/channels/schedulingEvents/messages/LessonParticipantsChanged"
+        }
+      ]
+    },
+    "consumeLearning": {
+      "action": "receive",
+      "channel": {
+        "$ref": "#/channels/learningEvents"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/learningEvents/messages/AssessmentPassed"
+        },
+        {
+          "$ref": "#/channels/learningEvents/messages/AssessmentFailed"
+        },
+        {
+          "$ref": "#/channels/learningEvents/messages/AssessmentResultRevised"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "IntegrationHeaders": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "eventId",
+          "eventType",
+          "eventVersion",
+          "occurredAt",
+          "producer",
+          "correlationId",
+          "aggregateId",
+          "aggregateVersion"
+        ],
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "eventType": {
+            "type": "string",
+            "enum": [
+              "LessonScheduled",
+              "LessonRescheduled",
+              "LessonCancelled",
+              "LessonCompleted",
+              "LessonNoShow",
+              "LessonParticipantsChanged",
+              "AssessmentPassed",
+              "AssessmentFailed",
+              "AssessmentResultRevised"
+            ]
+          },
+          "eventVersion": {
+            "type": "integer",
+            "const": 1
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "(?:Z|\\+00:00)$"
+          },
+          "producer": {
+            "type": "string",
+            "enum": [
+              "scheduling",
+              "learning"
+            ]
+          },
+          "correlationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9_.-]+$"
+          },
+          "aggregateId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "aggregateVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "causationId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "traceparent": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "LessonPayload": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schoolId",
+          "lessonId",
+          "lessonKind",
+          "teacherId"
+        ],
+        "properties": {
+          "schoolId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "lessonId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "lessonKind": {
+            "type": "string",
+            "enum": [
+              "Practical",
+              "Theory"
+            ]
+          },
+          "teacherId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "groupId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "vehicleId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "(?:Z|\\+00:00)$"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "(?:Z|\\+00:00)$"
+          },
+          "previousStartsAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "(?:Z|\\+00:00)$"
+          },
+          "previousEndsAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "(?:Z|\\+00:00)$"
+          },
+          "cancelledAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "(?:Z|\\+00:00)$"
+          },
+          "groupMembershipRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "scheduledDurationMinutes": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "lessonKind": {
+                  "const": "Practical"
+                }
+              },
+              "required": [
+                "lessonKind"
+              ]
+            },
+            "then": {
+              "required": [
+                "enrollmentId",
+                "vehicleId"
+              ]
+            },
+            "else": {
+              "required": [
+                "groupId"
+              ]
+            }
+          }
+        ]
+      },
+      "AssessmentPayload": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schoolId",
+          "assessmentId",
+          "enrollmentId"
+        ],
+        "properties": {
+          "schoolId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "assessmentId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid",
+            "not": {
+              "const": "00000000-0000-0000-0000-000000000000"
+            }
+          },
+          "assessedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "(?:Z|\\+00:00)$"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Recorded",
+              "ReviewRequired",
+              "Annulled"
+            ]
+          }
+        }
+      }
+    },
+    "messages": {
+      "LessonScheduled": {
+        "name": "LessonScheduled",
+        "title": "LessonScheduled v1",
+        "contentType": "application/json",
+        "headers": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/IntegrationHeaders"
+            },
+            {
+              "properties": {
+                "eventType": {
+                  "const": "LessonScheduled"
+                },
+                "producer": {
+                  "const": "scheduling"
+                }
+              }
+            }
+          ]
+        },
+        "payload": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/LessonPayload"
+            },
+            {
+              "required": [
+                "startsAt",
+                "endsAt"
+              ]
+            }
+          ]
+        },
+        "correlationId": {
+          "location": "$message.header#/correlationId"
+        }
+      },
+      "LessonRescheduled": {
+        "name": "LessonRescheduled",
+        "title": "LessonRescheduled v1",
+        "contentType": "application/json",
+        "headers": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/IntegrationHeaders"
+            },
+            {
+              "properties": {
+                "eventType": {
+                  "const": "LessonRescheduled"
+                },
+                "producer": {
+                  "const": "scheduling"
+                }
+              }
+            }
+          ]
+        },
+        "payload": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/LessonPayload"
+            },
+            {
+              "required": [
+                "startsAt",
+                "endsAt",
+                "previousStartsAt",
+                "previousEndsAt"
+              ]
+            }
+          ]
+        },
+        "correlationId": {
+          "location": "$message.header#/correlationId"
+        }
+      },
+      "LessonCancelled": {
+        "name": "LessonCancelled",
+        "title": "LessonCancelled v1",
+        "contentType": "application/json",
+        "headers": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/IntegrationHeaders"
+            },
+            {
+              "properties": {
+                "eventType": {
+                  "const": "LessonCancelled"
+                },
+                "producer": {
+                  "const": "scheduling"
+                }
+              }
+            }
+          ]
+        },
+        "payload": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/LessonPayload"
+            },
+            {
+              "required": [
+                "cancelledAt"
+              ]
+            }
+          ]
+        },
+        "correlationId": {
+          "location": "$message.header#/correlationId"
+        }
+      },
+      "LessonCompleted": {
+        "name": "LessonCompleted",
+        "title": "LessonCompleted v1",
+        "contentType": "application/json",
+        "headers": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/IntegrationHeaders"
+            },
+            {
+              "properties": {
+                "eventType": {
+                  "const": "LessonCompleted"
+                },
+                "producer": {
+                  "const": "scheduling"
+                }
+              }
+            }
+          ]
+        },
+        "payload": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/LessonPayload"
+            },
+            {
+              "required": [
+                "startsAt",
+                "endsAt",
+                "scheduledDurationMinutes"
+              ]
+            }
+          ]
+        },
+        "correlationId": {
+          "location": "$message.header#/correlationId"
+        }
+      },
+      "LessonNoShow": {
+        "name": "LessonNoShow",
+        "title": "LessonNoShow v1",
+        "contentType": "application/json",
+        "headers": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/IntegrationHeaders"
+            },
+            {
+              "properties": {
+                "eventType": {
+                  "const": "LessonNoShow"
+                },
+                "producer": {
+                  "const": "scheduling"
+                }
+              }
+            }
+          ]
+        },
+        "payload": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/LessonPayload"
+            },
+            {
+              "required": [
+                "startsAt",
+                "endsAt"
+              ]
+            }
+          ]
+        },
+        "correlationId": {
+          "location": "$message.header#/correlationId"
+        }
+      },
+      "LessonParticipantsChanged": {
+        "name": "LessonParticipantsChanged",
+        "title": "LessonParticipantsChanged v1",
+        "contentType": "application/json",
+        "headers": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/IntegrationHeaders"
+            },
+            {
+              "properties": {
+                "eventType": {
+                  "const": "LessonParticipantsChanged"
+                },
+                "producer": {
+                  "const": "scheduling"
+                }
+              }
+            }
+          ]
+        },
+        "payload": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/LessonPayload"
+            },
+            {
+              "required": [
+                "groupMembershipRevision"
+              ],
+              "properties": {
+                "lessonKind": {
+                  "const": "Theory"
+                }
+              }
+            }
+          ]
+        },
+        "correlationId": {
+          "location": "$message.header#/correlationId"
+        }
+      },
+      "AssessmentPassed": {
+        "name": "AssessmentPassed",
+        "title": "AssessmentPassed v1",
+        "contentType": "application/json",
+        "headers": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/IntegrationHeaders"
+            },
+            {
+              "properties": {
+                "eventType": {
+                  "const": "AssessmentPassed"
+                },
+                "producer": {
+                  "const": "learning"
+                }
+              }
+            }
+          ]
+        },
+        "payload": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AssessmentPayload"
+            },
+            {
+              "required": [
+                "assessedAt"
+              ]
+            }
+          ]
+        },
+        "correlationId": {
+          "location": "$message.header#/correlationId"
+        }
+      },
+      "AssessmentFailed": {
+        "name": "AssessmentFailed",
+        "title": "AssessmentFailed v1",
+        "contentType": "application/json",
+        "headers": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/IntegrationHeaders"
+            },
+            {
+              "properties": {
+                "eventType": {
+                  "const": "AssessmentFailed"
+                },
+                "producer": {
+                  "const": "learning"
+                }
+              }
+            }
+          ]
+        },
+        "payload": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AssessmentPayload"
+            },
+            {
+              "required": [
+                "assessedAt"
+              ]
+            }
+          ]
+        },
+        "correlationId": {
+          "location": "$message.header#/correlationId"
+        }
+      },
+      "AssessmentResultRevised": {
+        "name": "AssessmentResultRevised",
+        "title": "AssessmentResultRevised v1",
+        "contentType": "application/json",
+        "headers": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/IntegrationHeaders"
+            },
+            {
+              "properties": {
+                "eventType": {
+                  "const": "AssessmentResultRevised"
+                },
+                "producer": {
+                  "const": "learning"
+                }
+              }
+            }
+          ]
+        },
+        "payload": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/AssessmentPayload"
+            },
+            {
+              "required": [
+                "version",
+                "status"
+              ]
+            }
+          ]
+        },
+        "correlationId": {
+          "location": "$message.header#/correlationId"
+        }
+      }
+    }
+  }
+}

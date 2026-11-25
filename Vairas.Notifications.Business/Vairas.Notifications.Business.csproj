@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup><ProjectReference Include="../Vairas.Notifications.Domain/Vairas.Notifications.Domain.csproj" /></ItemGroup>
+</Project>

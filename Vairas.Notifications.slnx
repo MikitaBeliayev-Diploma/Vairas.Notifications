@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Vairas.Notifications.Domain/Vairas.Notifications.Domain.csproj" />
+  <Project Path="Vairas.Notifications.Business/Vairas.Notifications.Business.csproj" />
+  <Project Path="Vairas.Notifications.Persistance/Vairas.Notifications.Persistance.csproj" />
+  <Project Path="Vairas.Notifications/Vairas.Notifications.csproj" />
+  <Project Path="Vairas.Notifications.Tests/Vairas.Notifications.Tests.csproj" />
+</Solution>

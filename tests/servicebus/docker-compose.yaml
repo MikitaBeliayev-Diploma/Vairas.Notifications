@@ -1,0 +1,16 @@
+services:
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: ${ACCEPT_EULA:-N}
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Supply an ephemeral SQL password}
+  emulator:
+    image: mcr.microsoft.com/azure-messaging/servicebus-emulator:latest
+    depends_on: [sql]
+    environment:
+      ACCEPT_EULA: ${ACCEPT_EULA:-N}
+      SQL_SERVER: sql
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      SQL_WAIT_INTERVAL: 30
+    ports: ['127.0.0.1:15672:5672', '127.0.0.1:15301:5300']
+    volumes: ['./config.json:/ServiceBus_Emulator/ConfigFiles/Config.json:ro']

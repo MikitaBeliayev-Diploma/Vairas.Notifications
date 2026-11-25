@@ -1,0 +1,11 @@
+**/bin
+**/obj
+**/.git
+TestResults
+evidence
+.vs
+**/appsettings.Local.json
+.cache
+**/.env
+**/.env.*
+deploy/azure.local.json

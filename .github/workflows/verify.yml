@@ -1,0 +1,37 @@
+name: Notifications verification
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build, PostgreSQL/HTTP tests and coverage gate
+        shell: pwsh
+        run: ./scripts/verify.ps1
+      - name: Verify published service and migrations
+        shell: pwsh
+        run: ./scripts/verify-container.ps1 -Image vairas-notifications:ci
+      - name: Real Service Bus broker and full source-to-notification HTTP chain
+        shell: pwsh
+        run: ./scripts/test-broker.ps1 -AcceptMicrosoftEula
+      - name: Validate actual event samples and HTTP/API contracts
+        shell: pwsh
+        run: |
+          npm ci --ignore-scripts --prefix scripts/contract-tools
+          node scripts/validate-contracts.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: notifications-verification
+          path: |
+            TestResults/
+            evidence/
+            api/notifications.openapi.json

@@ -1,0 +1,6 @@
+{
+  "name": "vairas-notifications-contract-validation",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": { "@asyncapi/parser": "3.6.6", "ajv": "8.20.0", "ajv-formats": "3.0.1", "yaml": "2.9.1" }
+}
