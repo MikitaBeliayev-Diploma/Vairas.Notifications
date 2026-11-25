@@ -1,0 +1,548 @@
+{
+  "service": "Vairas.Notifications",
+  "generated": "2026-11-25",
+  "tool": "coverlet (XPlat Code Coverage) via Backend/local/coverage.py",
+  "filter": "TestCategory!=Broker (broker tests need the Service Bus emulator and run in local/test_all.py)",
+  "threshold": 70,
+  "thresholdMet": true,
+  "total": {
+    "lines": 1476,
+    "covered": 1249,
+    "branches": 1380,
+    "branchesCovered": 905,
+    "linePercent": 84.62,
+    "branchPercent": 65.58
+  },
+  "assemblies": {
+    "Vairas.Notifications": {
+      "lines": 729,
+      "covered": 534,
+      "branches": 568,
+      "branchesCovered": 304,
+      "linePercent": 73.25,
+      "branchPercent": 53.52
+    },
+    "Vairas.Notifications.Business": {
+      "lines": 346,
+      "covered": 329,
+      "branches": 495,
+      "branchesCovered": 348,
+      "linePercent": 95.09,
+      "branchPercent": 70.3
+    },
+    "Vairas.Notifications.Domain": {
+      "lines": 87,
+      "covered": 87,
+      "branches": 127,
+      "branchesCovered": 117,
+      "linePercent": 100.0,
+      "branchPercent": 92.13
+    },
+    "Vairas.Notifications.Persistance": {
+      "lines": 314,
+      "covered": 299,
+      "branches": 190,
+      "branchesCovered": 136,
+      "linePercent": 95.22,
+      "branchPercent": 71.58
+    }
+  },
+  "files": {
+    "Vairas.Notifications.Business/UnprocessableEntityException.cs": {
+      "lines": 1,
+      "covered": 0,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 0.0,
+      "branchPercent": 100.0
+    },
+    "Workers/NotificationTelemetry.cs": {
+      "lines": 7,
+      "covered": 0,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 0.0,
+      "branchPercent": 100.0
+    },
+    "Startup/DatabaseProvisioning.cs": {
+      "lines": 24,
+      "covered": 0,
+      "branches": 36,
+      "branchesCovered": 0,
+      "linePercent": 0.0,
+      "branchPercent": 0.0
+    },
+    "Vairas.Notifications.Persistance/PersistenceFailureException.cs": {
+      "lines": 1,
+      "covered": 0,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 0.0,
+      "branchPercent": 100.0
+    },
+    "Workers/InboxWorker.cs": {
+      "lines": 67,
+      "covered": 5,
+      "branches": 62,
+      "branchesCovered": 1,
+      "linePercent": 7.46,
+      "branchPercent": 1.61
+    },
+    "Workers/DeliveryWorker.cs": {
+      "lines": 38,
+      "covered": 5,
+      "branches": 20,
+      "branchesCovered": 1,
+      "linePercent": 13.16,
+      "branchPercent": 5.0
+    },
+    "HealthChecks/WorkerReadiness.cs": {
+      "lines": 23,
+      "covered": 5,
+      "branches": 10,
+      "branchesCovered": 2,
+      "linePercent": 21.74,
+      "branchPercent": 20.0
+    },
+    "Startup/StartupCommands.cs": {
+      "lines": 30,
+      "covered": 8,
+      "branches": 24,
+      "branchesCovered": 5,
+      "linePercent": 26.67,
+      "branchPercent": 20.83
+    },
+    "Vairas.Notifications.Business/NotificationErrors.cs": {
+      "lines": 10,
+      "covered": 3,
+      "branches": 14,
+      "branchesCovered": 0,
+      "linePercent": 30.0,
+      "branchPercent": 0.0
+    },
+    "Vairas.Notifications.Persistance/DatabaseExceptionTranslator.cs": {
+      "lines": 32,
+      "covered": 21,
+      "branches": 40,
+      "branchesCovered": 11,
+      "linePercent": 65.62,
+      "branchPercent": 27.5
+    },
+    "Configuration/Options/DeliveryOptionsValidator.cs": {
+      "lines": 10,
+      "covered": 7,
+      "branches": 32,
+      "branchesCovered": 19,
+      "linePercent": 70.0,
+      "branchPercent": 59.38
+    },
+    "Configuration/Options/DatabaseOptionsValidator.cs": {
+      "lines": 7,
+      "covered": 5,
+      "branches": 8,
+      "branchesCovered": 4,
+      "linePercent": 71.43,
+      "branchPercent": 50.0
+    },
+    "Configuration/Options/JwtOptionsValidator.cs": {
+      "lines": 7,
+      "covered": 5,
+      "branches": 6,
+      "branchesCovered": 3,
+      "linePercent": 71.43,
+      "branchPercent": 50.0
+    },
+    "Middleware/ApiExceptionHandler.cs": {
+      "lines": 24,
+      "covered": 20,
+      "branches": 28,
+      "branchesCovered": 19,
+      "linePercent": 83.33,
+      "branchPercent": 67.86
+    },
+    "Integrations/DependencyCorrelationHandler.cs": {
+      "lines": 9,
+      "covered": 8,
+      "branches": 6,
+      "branchesCovered": 4,
+      "linePercent": 88.89,
+      "branchPercent": 66.67
+    },
+    "Configuration/ConfigureTelemetry.cs": {
+      "lines": 9,
+      "covered": 8,
+      "branches": 2,
+      "branchesCovered": 1,
+      "linePercent": 88.89,
+      "branchPercent": 50.0
+    },
+    "Integrations/WorkloadTokens.cs": {
+      "lines": 28,
+      "covered": 25,
+      "branches": 18,
+      "branchesCovered": 14,
+      "linePercent": 89.29,
+      "branchPercent": 77.78
+    },
+    "HealthChecks/DatabaseReadiness.cs": {
+      "lines": 24,
+      "covered": 22,
+      "branches": 6,
+      "branchesCovered": 4,
+      "linePercent": 91.67,
+      "branchPercent": 66.67
+    },
+    "Integrations/NotificationOwners.cs": {
+      "lines": 40,
+      "covered": 37,
+      "branches": 40,
+      "branchesCovered": 33,
+      "linePercent": 92.5,
+      "branchPercent": 82.5
+    },
+    "Configuration/Options/GmailOptionsValidator.cs": {
+      "lines": 15,
+      "covered": 14,
+      "branches": 22,
+      "branchesCovered": 13,
+      "linePercent": 93.33,
+      "branchPercent": 59.09
+    },
+    "Integrations/GmailEmailProvider.cs": {
+      "lines": 91,
+      "covered": 86,
+      "branches": 102,
+      "branchesCovered": 71,
+      "linePercent": 94.51,
+      "branchPercent": 69.61
+    },
+    "Vairas.Notifications.Business/SourceMessagePolicy.cs": {
+      "lines": 74,
+      "covered": 70,
+      "branches": 150,
+      "branchesCovered": 94,
+      "linePercent": 94.59,
+      "branchPercent": 62.67
+    },
+    "Vairas.Notifications.Persistance/ContentRetention.cs": {
+      "lines": 28,
+      "covered": 27,
+      "branches": 32,
+      "branchesCovered": 27,
+      "linePercent": 96.43,
+      "branchPercent": 84.38
+    },
+    "Configuration/ConfigureAuthentication.cs": {
+      "lines": 29,
+      "covered": 28,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 96.55,
+      "branchPercent": 100.0
+    },
+    "Integrations/NotificationActorFactory.cs": {
+      "lines": 33,
+      "covered": 32,
+      "branches": 60,
+      "branchesCovered": 49,
+      "linePercent": 96.97,
+      "branchPercent": 81.67
+    },
+    "Vairas.Notifications.Business/NotificationWorkflow.cs": {
+      "lines": 170,
+      "covered": 165,
+      "branches": 295,
+      "branchesCovered": 219,
+      "linePercent": 97.06,
+      "branchPercent": 74.24
+    },
+    "Vairas.Notifications.Persistance/NotificationStore.cs": {
+      "lines": 82,
+      "covered": 81,
+      "branches": 10,
+      "branchesCovered": 7,
+      "linePercent": 98.78,
+      "branchPercent": 70.0
+    },
+    "Vairas.Notifications.Persistance/DeliveryStore.cs": {
+      "lines": 120,
+      "covered": 119,
+      "branches": 82,
+      "branchesCovered": 68,
+      "linePercent": 99.17,
+      "branchPercent": 82.93
+    },
+    "Vairas.Notifications.Business/BadRequestException.cs": {
+      "lines": 1,
+      "covered": 1,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Vairas.Notifications.Business/BusinessException.cs": {
+      "lines": 1,
+      "covered": 1,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Vairas.Notifications.Business/ConflictException.cs": {
+      "lines": 1,
+      "covered": 1,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Vairas.Notifications.Business/ForbiddenException.cs": {
+      "lines": 1,
+      "covered": 1,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Vairas.Notifications.Business/NotFoundException.cs": {
+      "lines": 1,
+      "covered": 1,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Vairas.Notifications.Business/NotificationService.cs": {
+      "lines": 84,
+      "covered": 84,
+      "branches": 36,
+      "branchesCovered": 35,
+      "linePercent": 100.0,
+      "branchPercent": 97.22
+    },
+    "Vairas.Notifications.Business/ServiceUnavailableException.cs": {
+      "lines": 1,
+      "covered": 1,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Vairas.Notifications.Business/UnauthorizedException.cs": {
+      "lines": 1,
+      "covered": 1,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Program.cs": {
+      "lines": 26,
+      "covered": 26,
+      "branches": 2,
+      "branchesCovered": 1,
+      "linePercent": 100.0,
+      "branchPercent": 50.0
+    },
+    "Middleware/CorrelationMiddleware.cs": {
+      "lines": 13,
+      "covered": 13,
+      "branches": 10,
+      "branchesCovered": 8,
+      "linePercent": 100.0,
+      "branchPercent": 80.0
+    },
+    "Middleware/Problems.cs": {
+      "lines": 7,
+      "covered": 7,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Integrations/DependencyTransport.cs": {
+      "lines": 25,
+      "covered": 25,
+      "branches": 18,
+      "branchesCovered": 18,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Controllers/NotificationsController.cs": {
+      "lines": 11,
+      "covered": 11,
+      "branches": 2,
+      "branchesCovered": 2,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/ApiDocumentTransformer.cs": {
+      "lines": 23,
+      "covered": 23,
+      "branches": 22,
+      "branchesCovered": 18,
+      "linePercent": 100.0,
+      "branchPercent": 81.82
+    },
+    "Configuration/ConfigureAuthorization.cs": {
+      "lines": 4,
+      "covered": 4,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/ConfigureDatabase.cs": {
+      "lines": 8,
+      "covered": 8,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/ConfigureDependencyInjection.cs": {
+      "lines": 9,
+      "covered": 9,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/ConfigureExceptionHandling.cs": {
+      "lines": 12,
+      "covered": 12,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/ConfigureHealthChecks.cs": {
+      "lines": 11,
+      "covered": 11,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/ConfigureHttpClients.cs": {
+      "lines": 10,
+      "covered": 10,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/ConfigureJsonSerialization.cs": {
+      "lines": 14,
+      "covered": 14,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/ConfigureLogging.cs": {
+      "lines": 5,
+      "covered": 5,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/ConfigureMessageBroker.cs": {
+      "lines": 5,
+      "covered": 5,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/ConfigureOpenApi.cs": {
+      "lines": 6,
+      "covered": 6,
+      "branches": 4,
+      "branchesCovered": 3,
+      "linePercent": 100.0,
+      "branchPercent": 75.0
+    },
+    "Configuration/ConfigureOptions.cs": {
+      "lines": 14,
+      "covered": 14,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Configuration/Options/DependencyOptionsValidator.cs": {
+      "lines": 4,
+      "covered": 4,
+      "branches": 2,
+      "branchesCovered": 1,
+      "linePercent": 100.0,
+      "branchPercent": 50.0
+    },
+    "Configuration/Options/NotificationBusOptionsValidator.cs": {
+      "lines": 5,
+      "covered": 5,
+      "branches": 18,
+      "branchesCovered": 2,
+      "linePercent": 100.0,
+      "branchPercent": 11.11
+    },
+    "Configuration/Options/OriginValidation.cs": {
+      "lines": 2,
+      "covered": 2,
+      "branches": 8,
+      "branchesCovered": 8,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Vairas.Notifications.Domain/NotificationDelivery.cs": {
+      "lines": 35,
+      "covered": 35,
+      "branches": 55,
+      "branchesCovered": 49,
+      "linePercent": 100.0,
+      "branchPercent": 89.09
+    },
+    "Vairas.Notifications.Domain/NotificationRenderer.cs": {
+      "lines": 32,
+      "covered": 32,
+      "branches": 58,
+      "branchesCovered": 55,
+      "linePercent": 100.0,
+      "branchPercent": 94.83
+    },
+    "Vairas.Notifications.Domain/NotificationRuleException.cs": {
+      "lines": 1,
+      "covered": 1,
+      "branches": 0,
+      "branchesCovered": 0,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    },
+    "Vairas.Notifications.Domain/NotificationTemplate.cs": {
+      "lines": 19,
+      "covered": 19,
+      "branches": 14,
+      "branchesCovered": 13,
+      "linePercent": 100.0,
+      "branchPercent": 92.86
+    },
+    "Vairas.Notifications.Persistance/DatabaseMigrator.cs": {
+      "lines": 28,
+      "covered": 28,
+      "branches": 20,
+      "branchesCovered": 17,
+      "linePercent": 100.0,
+      "branchPercent": 85.0
+    },
+    "Vairas.Notifications.Persistance/NotificationDbContext.cs": {
+      "lines": 23,
+      "covered": 23,
+      "branches": 6,
+      "branchesCovered": 6,
+      "linePercent": 100.0,
+      "branchPercent": 100.0
+    }
+  }
+}

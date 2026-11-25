@@ -40,3 +40,7 @@ evidence/
 *.log
 *.tsbuildinfo
 **/appsettings.Local.json
+
+# Committed coverage reports (see docs/coverage/README.md)
+!docs/coverage/
+!docs/coverage/**

@@ -53,3 +53,16 @@ dotnet test Vairas.Notifications.slnx            # Docker required; broker tests
 
 API exports: `api/`. Extended notes, Azure/deployment material, validation reports and evidence:
 `../../Documentation/Backend/Vairas.Notifications/`.
+
+## Tests and coverage
+
+Requirements: .NET SDK 10 and Docker (PostgreSQL integration tests start a throw-away container via Testcontainers).
+
+```powershell
+dotnet test Vairas.Notifications.slnx                  # unit + integration tests
+dotnet test Vairas.Notifications.slnx --collect:"XPlat Code Coverage" --settings coverage.runsettings --results-directory TestResults   # measure coverage
+```
+
+Broker tests (category `Broker`) need the Azure Service Bus emulator (Docker, Microsoft EULA): run `./scripts/test-broker.ps1 -AcceptMicrosoftEula` or set `VAIRAS_TEST_SERVICEBUS_CONNECTION`; exclude them with `--filter "TestCategory!=Broker"`.
+
+**Coverage report:** [docs/coverage/README.md](docs/coverage/README.md) (summary, per-assembly table, least covered files); machine-readable `docs/coverage/coverage-summary.json` and `docs/coverage/index.html` (per-file table). The raw cobertura XML of a local run is written to `TestResults/`.
